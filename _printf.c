@@ -3,9 +3,9 @@
 void print_buffer(char buffer[], int *buff_ind);
 
 /**
- *  _printf - a function that prints formouted output to stdout
- *  @format: the string that contains any format specifier
- *  Return: returns the number of printed characters
+ * _printf - a function that prints formouted output to stdout
+ * @format: the string that contains any format specifier
+ * Return: returns the number of printed characters
  */
 int _printf(const char *format, ...)
 {
@@ -35,21 +35,22 @@ int _printf(const char *format, ...)
 			width = get_width(format, &i, list);
 			precision = get_precision(format, &i, list);
 			size = get_size(format, &i);
+			++i;
 			printed = handle_print(format, &i, list, buffer,
-			flags, width, precision, size);
-		if (printed == -1)
-			return (-1);
-		printed_chars += printed;
+				flags, width, precision, size);
+			if (printed == -1)
+				return (-1);
+			printed_chars += printed;
+		}
 	}
+
+	print_buffer(buffer, &buff_ind);
+
+	va_end(list);
+
+	return (printed_chars);
 }
 
-print_buffer(buffer, &buff_ind);
-
-va_end(list);
-
-return (printed_chars);
-
-}
 /**
  * print_buffer - Prints the contents of the buffer if it exist
  * @buffer: Array of chars
